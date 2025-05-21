@@ -1,8 +1,20 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { GetBlueprintGraph } from './services/blueprintGraphServices';
+import { BuildGraph } from './services/graphServices';
 
 function App() {
+  const [data, setData] = useState<{}>({});
+  useEffect(() => {    
+      GetBlueprintGraph().then(data => {
+        setData(data);
+        const graph = BuildGraph(data.edges);
+        console.log(graph);
+      });  
+         
+  },[]);
+
   return (
     <div className="App">
       <header className="App-header">
@@ -16,7 +28,7 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn React
+          Learn Reactsssss
         </a>
       </header>
     </div>
