@@ -15,6 +15,26 @@ export default function PrefillMap({info, data, onPropertyMapClick}:
 
         if(ancestors && ancestors.length > 0) {
             const prefillSources : PrefillSource[] = [];
+            /* Action Properties and Client Organization Properties  */
+            prefillSources.push({
+                id: '1',
+                name: 'Action Properties',
+                properties: [
+                    'fieldA',
+                    'field2'
+                ]
+            });
+
+            prefillSources.push({
+                id: '12',
+                name: 'Client Organization Properties',
+                properties: [
+                    'fieldz',
+                    'fieldX'
+                ]
+            });
+            /* Action Properties and Client Organization Properties  */
+
             ancestors.forEach(a => {
                 const node = data.nodes.find(n => n.id === a);
                 if (node) {
@@ -29,6 +49,7 @@ export default function PrefillMap({info, data, onPropertyMapClick}:
                     }
                 }
             });
+            
             const p = prefillSources.map(a => 
                 
                 <Accordion.Item eventKey={a.name} key={a.id}>
