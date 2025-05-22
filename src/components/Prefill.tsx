@@ -4,12 +4,14 @@ import { Node } from "../types/node";
 import { PrefillMapping } from "../types/prefillmapping";
 
 export default function Prefill({selectedForm, 
-    blueprintGraph, prefillMapping, onPropertyClick, onPropertyMapDeleteClick}
+    blueprintGraph, prefillMapping, onPropertyClick, 
+    onPropertyMapDeleteClick,onPreFillCloseClick}
 :{selectedForm: string | undefined, 
     blueprintGraph: BlueprintGraph | undefined, 
     prefillMapping: PrefillMapping,
     onPropertyClick: any
-    onPropertyMapDeleteClick: any}
+    onPropertyMapDeleteClick: any
+    onPreFillCloseClick: any}
 ) {
     let form: Form | undefined;
     let node: Node | undefined;
@@ -31,13 +33,23 @@ export default function Prefill({selectedForm,
                     {(mapping && mapping[p]) ?
                     <div>{p}:{mapping[p].name}.{mapping[p].property} <button onClick={() => onPropertyMapDeleteClick(p)}>x</button></div>
                     :
-                    <button onClick={() => onPropertyClick(p)}>{p}</button>
+                    <button type="button" className="btn btn-secondary"
+                         onClick={() => onPropertyClick(p)}>{p}</button>
                     }
                 </div>
         );
         return (
-            <div>
-                <h3>{node.data.name}</h3>    
+            <div className="container">
+                <div className="row">
+                    <div className="col">{node.data.name}</div>
+                    <div className="col">
+                        <button type="button" className="close" 
+                            onClick={onPreFillCloseClick}
+                            aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>    
                 {prefills} 
             </div>
         );

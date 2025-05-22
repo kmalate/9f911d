@@ -2,9 +2,12 @@ import { BuildReverseGraph, GetAncestors } from "../services/graphServices";
 import { BlueprintGraph } from "../types/BlueprintGraph"
 import { PrefillInfo } from "../types/PrefillInfo";
 import { PrefillSource } from "../types/prefillSource";
+import { Accordion } from "react-bootstrap";
 
 export default function PrefillMap({info, data, onPropertyMapClick}: 
 {info: PrefillInfo | undefined,  data: BlueprintGraph, onPropertyMapClick: any}) {
+
+
     if (info) {
         //Get Nodes Ancestors using RerverseGraph and DPS
         const reverseGraph = BuildReverseGraph(data.edges);
@@ -27,26 +30,31 @@ export default function PrefillMap({info, data, onPropertyMapClick}:
                 }
             });
             const p = prefillSources.map(a => 
-                <div key={a.id}>
-                        <h5>{a.name}</h5>
-                        <ul>
+                
+                <Accordion.Item eventKey={a.name} key={a.id}>
+                    <Accordion.Header>{a.name}</Accordion.Header>
+                     <Accordion.Body>
+                         <ul>
                         {
                             a.properties.map(p => 
-                                <li key={`${a.id}-${p}`}>
-                                    <button 
+                                <div key={`${a.id}-${p}`}>
+                                    <button type="button" className="btn btn-link"
                                         onClick={() => 
                                             onPropertyMapClick(info.property, a.id, a.name, p)}
                                     >{p}</button>
-                                </li>
+                                </div>
                             )
-                         }
+                        }
                         </ul>
-                </div>
+                     </Accordion.Body>
+                </Accordion.Item>
             );
 
             return (
                 <div>
-                    <div>{p}</div>
+                    <Accordion defaultActiveKey={['0']} alwaysOpen>
+                        {p}
+                    </Accordion>
                 </div>
             );
         }
