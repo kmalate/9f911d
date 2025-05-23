@@ -2,6 +2,7 @@ import { BlueprintGraph } from "../types/BlueprintGraph";
 import { Form } from "../types/form";
 import { Node } from "../types/node";
 import { PrefillMapping } from "../types/prefillmapping";
+import { CloseButton } from "react-bootstrap";
 
 export default function Prefill({selectedForm, 
     blueprintGraph, prefillMapping, onPropertyClick, 
@@ -31,7 +32,7 @@ export default function Prefill({selectedForm,
         const prefills = properties.map(p => 
                 <div key={p}>
                     {(mapping && mapping[p]) ?
-                    <div>{p}:{mapping[p].name}.{mapping[p].property} <button onClick={() => onPropertyMapDeleteClick(p)}>x</button></div>
+                    <div>{p}:{mapping[p].name}.{mapping[p].property} <CloseButton onClick={() => onPropertyMapDeleteClick(p)}/></div>
                     :
                     <button type="button" className="btn btn-secondary"
                          onClick={() => onPropertyClick(p)}>{p}</button>
@@ -43,17 +44,13 @@ export default function Prefill({selectedForm,
                 <div className="row">
                     <div className="col">{node.data.name}</div>
                     <div className="col">
-                        <button type="button" className="close" 
-                            onClick={onPreFillCloseClick}
-                            aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+                        <CloseButton onClick={onPreFillCloseClick}/>
                     </div>
                 </div>    
                 {prefills} 
             </div>
         );
     } else {
-        return <div></div>
+        return <></>
     }
 }
